@@ -14,5 +14,40 @@
         <a th:href="@{'/reportes'}"><button class="btn btn-primary">Reportes</button></a>
     </div>
 </div>
+<div class="container mt-5">
+    <h2>Empleados totales</h2>
+    <a th:href="@{/empleados/nuevo}" class="btn btn-primary mt-3 mb-3">Nuevo empleado</a>
+    <nav class="navbar mt-3 mb-3">
+        <div class="container-fluid">
+            <form class="d-flex" method="post" th:action="@{/empleados/buscar}">
+                <input class="form-control me-2" type="text" placeholder="Texto a buscar" name="busqueda" th:value="${busquedaRealizada}">
+                <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
+                <a th:href="@{/empleados}" class="btn btn-outline-success" type="submit">Limpiar</a>
+            </form>
+        </div>
+    </nav>
+    <table class="table table-sm">
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Puesto</th>
+            <th>Departamento</th>
+            <th>Ciudad</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="employee,info: ${listaEmpleados}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${employee.getFirstName()}"></td>
+            <td th:text="${employee.getLastName()}"></td>
+            <td th:text="${employee.getJob().getJobTitle()}"></td>
+            <td th:text="${employee.getDepartment().getDepartmentName()}"></td>
+            <td th:text="${employee.getDepartment().getLocation().getCity()}"></td>
+            <td><a class="btn btn-primary" th:href="@{'/empleados/editar'+'?id='+${employee.getId()}}">Editar</a></td>
+            <td><a class="btn btn-danger" th:href="@{'/empleados/borrar'+'?id='+${employee.getId()}}">Borrar</a></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
